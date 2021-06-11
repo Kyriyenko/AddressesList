@@ -22,6 +22,6 @@ Route::get('/', function () {
 
 Route::get('/api',  [PostController::class, 'showData']);
 Route::get('/api/delete/{id}',  [PostController::class, 'deleteData']);
-Route::get('/api/posts/{title}/{desc}',  [PostController::class, 'addData']);
-Route::get('/api/edit/{id}/{title}/{desc}',  [PostController::class, 'editData']);
+Route::get('/api/posts/{name}/{email}/{address}',  [PostController::class, 'addData']);
+Route::get('/api/edit/{id}/{name}/{email}/{address}',  [PostController::class, 'editData']);
 

@@ -8,27 +8,29 @@ use App\Models;
 class PostController extends Controller
 {
     public function showData(){
-            return Models\Post::latest()->paginate(30);
+            return Models\Record::latest()->paginate(30);
     }
 
     public  function deleteData($id){
-        Models\Post::find($id)->delete();
+        Models\Record::find($id)->delete();
     }
 
-    public  function addData($title,$desc){
-       $post = new  Models\Post([
-           'title'=>$title,
-           'description'=>$desc
+    public  function addData($name,$email,$address){
+       $post = new  Models\Record([
+           'name'=>$name,
+           'email'=>$email,
+           'address'=>$address,
        ]);
 
        $post->save();
     }
 
 
-    public function editData($id,$title,$des){
-        $post = Models\Post::find($id);
-        $post->title=$title;
-        $post->description=$des;
+    public function editData($id,$name,$email,$address){
+        $post = Models\Record::find($id);
+        $post->name=$name;
+        $post->email=$email;
+        $post->address=$address;
 
         $post->save();
 
