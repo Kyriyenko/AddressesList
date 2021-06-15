@@ -2,37 +2,60 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Record;
 use Illuminate\Http\Request;
 use App\Models;
 
 class PostController extends Controller
 {
     public function showData(){
-            return Models\Record::latest()->paginate(30);
+            return Record::latest()->paginate(30);
     }
 
     public  function deleteData($id){
-        Models\Record::find($id)->delete();
+        Record::find($id)->delete();
+
+        $params = [
+            'success' => 'true',
+            'message' => 'data was deleted',
+
+        ];
+        response()->json($params, 200)->send();
     }
 
-    public  function addData($name,$email,$address){
-       $post = new  Models\Record([
-           'name'=>$name,
-           'email'=>$email,
-           'address'=>$address,
+    public  function addData(Request $request){
+       $post = new  Record([
+           'name'=>$request->name,
+           'email'=>$request->email,
+           'address'=>$request->address
        ]);
 
        $post->save();
+
+        $params = [
+            'success' => 'true',
+            'message' => 'data has been added',
+            'record'=> $post->toArray()
+        ];
+        response()->json($params, 200)->send();
+
     }
 
 
-    public function editData($id,$name,$email,$address){
-        $post = Models\Record::find($id);
-        $post->name=$name;
-        $post->email=$email;
-        $post->address=$address;
+    public function editData(Request $request){
+        $post = Record::find($request->id);
+        $post->name='dmitriy';
+        $post->email='lirienko';
+        $post->address='asdasdsa';
 
         $post->save();
+
+        $params = [
+            'success' => 'true',
+            'message' => 'data updated',
+            'record'=> $post->toArray()
+        ];
+        response()->json($params, 200)->send();
 
     }
 }
